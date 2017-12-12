@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 定时器 -->
+	
+	<!-- 定时器类 -->
+	<bean id="test" class="edson.web.erp.utils.quartz.Quartz"/>
+	
+	<!-- 定义哪个定时器的哪个方法 -->
+	<bean id="test2" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="test"></property>
+		<property name="targetMethod" value="test"></property>
+	</bean>	
+	
+	<!-- 配置任务执行的周期 -->
+	<bean id="test3" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="test2"></property>
+		<property name="cronExpression" value="1/5 * * * * ?"></property>
+	</bean>
+	
+	<!-- 运行任务 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+		<property name="triggers">
+			<list>
+				<ref bean="test3"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</beans>

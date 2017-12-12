@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.store.domain.Store" table="tbl_store" >
+		<id name="store_id" column="store_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="name" length="120"/>
+		<property name="address" length="120"/>
+
+		<many-to-one name="store_emp" lazy="false"
+			class="edson.web.erp.emp.domain.Employee"
+			column="store_emp"
+		/>
+		
+			
+	</class>
+
+</hibernate-mapping>

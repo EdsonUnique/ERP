@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="goodsTypeAction" class="edson.web.erp.goodsType.action.GoodsTypeAction" scope="prototype" >
+		<property name="service" ref="goodsTypeService"/>
+		<property name="supp_service" ref="supplierService"/>
+	</bean>
+	<bean id="goodsTypeService" class="edson.web.erp.goodsType.service.GoodsTypeService" >
+		<property name="dao" ref="goodsTypeDao"/>
+	</bean>
+	<bean id="goodsTypeDao" class="edson.web.erp.goodsType.dao.GoodsTypeDao" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+</beans>

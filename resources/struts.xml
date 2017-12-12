@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+    
+    <!-- 基础包 -->
+    <package name="base" namespace="/" extends="json-default">
+    	<interceptors>
+    		<interceptor name="loginInterceptor" class="edson.web.erp.utils.interceptor.LoginInterceptor">
+    			<param name="excludeMethods">login</param>
+    		</interceptor>
+    		<interceptor name="PrivilegeInterceptor" class="edson.web.erp.utils.interceptor.PrivilegeInterceptor"></interceptor>
+    		<interceptor name="GlobalExceptionInterceptor" class="edson.web.erp.utils.interceptor.GlobalExceptionInterceptor"></interceptor>
+    		<interceptor-stack name="myStack">
+    			<interceptor-ref name="GlobalExceptionInterceptor"></interceptor-ref>
+    			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+    			<interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"/>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-interceptor-ref name="myStack"></default-interceptor-ref>
+    	<global-results>
+    		<result name="global_login">/index.jsp</result>
+    		<result name="input">/WEB-INF/jsps/error.jsp</result>
+    		<result name="global_exception">/WEB-INF/jsps/exception.jsp</result>
+    	</global-results>
+    	
+    	<action name="login_*" class="loginUIAction" method="{1}">
+    		<result name="success_loginUI">/WEB-INF/jsps/login.jsp</result>
+    	</action>
+    </package>
+    
+    <!-- 员工模块 -->
+    <package name="employee" namespace="/employee" extends="base">
+    	<action name="emp_*"  class="empAction" method="{1}">
+    		<result name="fail_login">/WEB-INF/jsps/login.jsp</result>
+    		<result name="success_login">/WEB-INF/jsps/main.jsp</result>
+    		<result name="success_changePwdUI">/WEB-INF/jsps/emp/changePwd.jsp</result>
+    		<result name="success_list">
+    			/WEB-INF/jsps/emp/list.jsp
+    		</result>
+    		<result name="success_addOrUpdateUI">
+    			/WEB-INF/jsps/emp/add.jsp
+    		</result>
+    		<result name="success_logout" type="redirectAction">
+    			<param name="namespace">/</param>
+    			<param name="actionName">login_loginUI</param>
+    		</result>
+    	</action>
+    </package>
+    
+    <!-- 部门模块 -->
+    <package name="department" namespace="/department" extends="base">
+    	<action name="dept_*" class="departmentAction" method="{1}">
+    		<result name="success_list">
+    			/WEB-INF/jsps/dept/list.jsp
+    		</result>
+    		<result name="redirect_list" type="redirect">dept_queryOrList</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/dept/add.jsp</result>
+    	</action>
+    
+    </package>
+    <!-- 角色模块 -->
+    <package name="role" namespace="/role" extends="base">
+    	<action name="role_*" class="roleAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/role/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/role/input.jsp</result>
+    	</action>
+    
+    </package>
+    <!-- 资源模块 -->
+    <package name="resource" namespace="/resource" extends="base">
+    	<action name="resource_*" class="resourceAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/resource/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/resource/input.jsp</result>
+    	</action>
+    
+    </package>
+    <!-- 菜单模块 -->
+    <package name="menu" namespace="/menu" extends="base">
+    	<action name="menu_*" class="menuAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/menu/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/menu/input.jsp</result>
+    	</action>
+    </package>
+    
+    <!-- 供应商模块 -->
+    <package name="supplier" namespace="/supplier" extends="base">
+    	<action name="supplier_*" class="supplierAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/supplier/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/supplier/input.jsp</result>
+    	</action>
+    </package>
+    
+    <!-- 商品类型模块 -->
+    <package name="goodsType" namespace="/goodsType" extends="base">
+    	<action name="goodsType_*" class="goodsTypeAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/goodstype/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/goodstype/input.jsp</result>
+    	</action>
+    </package>
+    <!-- 货物模块 -->
+    <package name="goods" namespace="/goods" extends="base">
+    	<action name="goods_*" class="goodsAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/goods/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/goods/input.jsp</result>
+    		<result name="ajaxGetGoodsType" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				goodsTypesAjax\[\d+\]\.name,  <!-- 正则表达式过滤数据 -->
+    				goodsTypesAjax\[\d+\]\.goodsType_id <!-- 正则表达式过滤数据 -->
+    			</param>
+    		</result>
+    	</action>
+    </package>
+    
+   <!--  订单模块 -->
+    <package name="order" namespace="/order" extends="base">
+    	<action name="order_*" class="orderAction" method="{1}">
+    		<result name="mkOrder">/WEB-INF/jsps/order/in/input.jsp</result>
+    		<result name="success_list">/WEB-INF/jsps/order/in/inList.jsp</result>
+    		<result name="success_orderItemDetail">/WEB-INF/jsps/order/in/inDetailList.jsp</result>
+    		<result name="success_approveList">/WEB-INF/jsps/order/in/inApproveList.jsp</result>
+    		<result name="success_toApprove">/WEB-INF/jsps/order/in/inApprove.jsp</result>
+    		
+    		<result name="success_toAssignList">/WEB-INF/jsps/order/transport/list.jsp</result>
+    		<result name="success_assignEmp">/WEB-INF/jsps/order/transport/assignTask.jsp</result>
+    		<result name="success_searchAssign">/WEB-INF/jsps/order/transport/tasks.jsp</result>
+    		<result name="success_taskDetail">/WEB-INF/jsps/order/transport/taskDetail.jsp</result>
+    		
+    		
+    		<result name="ajaxSupplierWithType" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				goodsList\[\d+\]\.name,
+    				goodsList\[\d+\]\.goods_id,
+    				gtList\[\d+\]\.name,
+    				gtList\[\d+\]\.goodsType_id,
+    				first_sale_price
+    			</param>
+    		</result>
+    		<result name="ajaxTypeWithGoods" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				goodsListAjax\[\d+\]\.name,
+    				goodsListAjax\[\d+\]\.goods_id,
+    				first_sale_price
+    			</param>
+    		</result>
+    		<result name="ajaxGoodsWithPrice" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				goods\.sale_price
+    			</param>
+    		</result>
+    		<result name="ajaxNewTypeWithGoods" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				newGtList\[\d+\]\.name,
+    				newGtList\[\d+\]\.goodsType_id,
+    				newGoodsList\[\d+\]\.name,
+    				newGoodsList\[\d+\]\.goods_id,
+    				first_sale_price
+    			</param>
+    		</result>
+    	</action>
+    
+    </package>
+    
+    <!--仓库模块  -->
+    <package name="store" namespace="/store" extends="base">
+    	<action name="store_*" class="storeAction" method="{1}">
+    		<result name="success_list">/WEB-INF/jsps/store/list.jsp</result>
+    		<result name="success_addOrUpdateUI">/WEB-INF/jsps/store/input.jsp</result>
+    		<result name="success_inStoreList">/WEB-INF/jsps/store/in/list.jsp</result>
+    		<result name="success_inStoreDetail">/WEB-INF/jsps/store/in/inDetail.jsp</result>
+    		
+    		
+    		
+    		<result name="success_storeGoods" type="json">
+    			<param name="root">surplus</param>
+    		</result>
+    	</action>
+    
+    
+    </package>
+    
+</struts>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

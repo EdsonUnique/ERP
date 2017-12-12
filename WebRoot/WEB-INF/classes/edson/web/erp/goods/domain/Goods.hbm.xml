@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.goods.domain.Goods" table="tbl_goods" >
+		<id name="goods_id" column="goods_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="name" length="120"/>
+		<property name="origin" length="120"/>
+		<property name="manufacturer" length="120"/>
+		<property name="unit" length="120"/>
+		<property name="origin_price" />
+		<property name="sale_price" />
+		<property name="volume" />
+		
+		<many-to-one name="goodsType" lazy="false" class="edson.web.erp.goodsType.domain.GoodsType" column="goodsType_id"></many-to-one>
+		<many-to-one name="supplier" lazy="false" class="edson.web.erp.supplier.domain.Supplier" column="supplier_id"></many-to-one>
+	</class>
+
+</hibernate-mapping>

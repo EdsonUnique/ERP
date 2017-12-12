@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.emp.domain.Employee" table="Employee" >
+		<id name="emp_id" column="emp_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="name" length="120"/>
+		<property name="password" length="120"/>
+		<property name="realName" length="120"/>
+		<property name="email" length="120"/>
+		<property name="telephone" length="120"/>
+		<property name="gender" />
+		<property name="address" length="120"/>
+		<property name="birthday" length="120" />
+		<property name="loginTime" length="120" />
+		<property name="loginIP" length="240" />
+		<property name="loginTimes" />
+		
+		<many-to-one 
+			name="dept"
+			column="dept_id"
+			class="edson.web.erp.department.domain.Department"
+			lazy="false"
+		></many-to-one>
+		
+		<set name="roles" table="tbl_emp_role" lazy="false">
+			<key column="emp_id" />
+			<many-to-many column="role_id" class="edson.web.erp.role.domain.Role"/>
+		</set>
+	
+	</class>
+
+</hibernate-mapping>

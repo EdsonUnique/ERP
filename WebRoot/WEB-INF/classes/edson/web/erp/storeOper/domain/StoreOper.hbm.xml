@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.storeOper.domain.StoreOper" table="tbl_storeoper" >
+		<id name="storeOper_id" column="storeOper_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="num" />
+		<property name="type" />
+		<property name="operTime" length="120" />
+		
+		<many-to-one name="operator"
+			class="edson.web.erp.emp.domain.Employee"
+			column="emp_id"
+			lazy="false"
+		/>
+		<many-to-one name="store"
+			class="edson.web.erp.store.domain.Store"
+			column="store_id"
+			lazy="false"
+		/>
+		<many-to-one name="goods"
+			class="edson.web.erp.goods.domain.Goods"
+			column="goods_id"
+			lazy="false"
+		/>
+		
+
+	</class>
+
+</hibernate-mapping>

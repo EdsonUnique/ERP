@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="storeAction" class="edson.web.erp.store.action.StoreAction" scope="prototype" >
+		<property name="service" ref="storeService"/>
+		<property name="emp_service" ref="empService"/>
+		<property name="o_service" ref="orderService"/>
+		<property name="ot_service" ref="orderItemService"/>
+	</bean>
+	<bean id="storeService" class="edson.web.erp.store.service.StoreService" >
+		<property name="dao" ref="storeDao"/>
+		<property name="ot_dao" ref="orderItemDao"/>
+		<property name="oper_dao" ref="storeOperDao"/>
+		<property name="st_dao" ref="storeItemDao"/>
+	</bean>
+	<bean id="storeDao" class="edson.web.erp.store.dao.StoreDao" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edson.web.erp.department.domain.Department" table="department" >
+		<id name="did" column="dept_id">
+			<generator class="native"></generator>
+		</id>
+		
+		<property name="name" length="60"/>
+		<property name="telephone" length="60"/>
+		
+	</class>
+
+
+</hibernate-mapping>
+
+
+
+
+

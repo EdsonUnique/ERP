@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.orderItem.domain.OrderItem" table="tbl_orderitem" >
+		<id name="orderItem_id" column="orderItem_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="price" />
+		<property name="num" />
+		<property name="sum" />
+		<property name="surplus"/>
+		
+		<many-to-one name="goods"
+			class="edson.web.erp.goods.domain.Goods" column="goods_id"
+			lazy="false"
+		/>
+		
+		<many-to-one name="order"
+			class="edson.web.erp.order.domain.Order" column="order_id"
+		/>
+		
+		<many-to-one 
+			name="goodsType" 
+			class="edson.web.erp.goodsType.domain.GoodsType"
+			lazy="false"
+			column="goodsType_id"
+		/>
+		
+
+	</class>
+
+</hibernate-mapping>

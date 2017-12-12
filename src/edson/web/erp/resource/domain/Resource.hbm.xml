@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.resource.domain.Resource" table="tbl_resource" >
+		<id name="resource_id" column="resource_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="name" length="120"/>
+		<property name="path" length="120"/>
+		<property name="is_operation" />
+		<property name="is_action"></property>
+		
+		<set name="roles" table="tbl_role_resources" lazy="false">
+			<key column="resource_id"></key>
+			<many-to-many class="edson.web.erp.role.domain.Role" column="role_id"></many-to-many>
+		</set>
+
+	</class>
+
+</hibernate-mapping>

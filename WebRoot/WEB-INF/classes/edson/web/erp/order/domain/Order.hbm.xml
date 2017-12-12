@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.order.domain.Order" table="tbl_order" >
+		<id name="order_id" column="order_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="orderNum" length="120"/>
+		<property name="createTime" length="120"/>
+		<property name="checkTime" length="120"/>
+		<property name="endTime" length="120"/>
+		<property name="orderType" />
+		<property name="state" />
+		<property name="totalNum" />
+		<property name="totalPrice" />
+	
+		<many-to-one name="creater"
+			class="edson.web.erp.emp.domain.Employee"
+			column="creater"
+			lazy="false"
+		/>
+		
+		<many-to-one name="checker"
+			class="edson.web.erp.emp.domain.Employee"
+			column="checker"
+			lazy="false"
+		/>
+		
+		<many-to-one name="completer"
+			class="edson.web.erp.emp.domain.Employee"
+			column="completer"
+			lazy="false"
+		/>
+		
+		<many-to-one name="supplier"
+			class="edson.web.erp.supplier.domain.Supplier"
+			column="supplier_id"
+			lazy="false"
+		/>
+		
+		<set name="orderItems" cascade="save-update" inverse="true" lazy="false" order-by="goodsType_id,orderItem_id">
+			<key column="order_id"/>
+			<one-to-many class="edson.web.erp.orderItem.domain.OrderItem"/>
+		</set>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+1权限系统：
+	角色表与资源表设计：多对多关系
+	角色表：角色名称 （中文） 角色简称（英文）
+	资源表：资源名称 资源值  资源访问路径（url访问和action调用） 资源操作类别（可视，可访问）
+	角色-资源表：角色id, 资源id
+	
+	use erp;
+	create table tbl_role(
+		role_id int primary key,
+		name varchar(60),
+		short_name varchar(60)
+	)charset utf8 collate utf8_general_ci;
+	
+	create table tbl_resource(
+		resource_id int primary key,
+		name varchar(60),
+		path varchar(120),
+		is_operation int
+	)charset utf8 collate utf8_general_ci;
+	
+	create table role_resource(
+		rr_id int primary key,
+		role_id int,
+		resource_id int ,
+		constraint role_id_FK foreign key(role_id) references tbl_role(role_id), 
+		constraint resource_id_FK foreign key(resource_id) references tbl_resource(resource_id)
+	)charset utf8 collate utf8_general_ci;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edson.web.erp.menu.domain.Menu" table="tbl_menu" >
+		<id name="menu_id" column="menu_id">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="name" length="120"/>
+		<property name="path" length="120"/>
+
+		<many-to-one lazy="false"  name="parent_menu" column="parent_id" class="edson.web.erp.menu.domain.Menu"></many-to-one>
+		<set name="children_menu" lazy="false" cascade="delete" inverse="true" order-by="menu_id">
+			<key column="parent_id" />
+			<one-to-many  class="edson.web.erp.menu.domain.Menu" />
+		</set>
+		
+		<set name="roles" table="tbl_role_menu" lazy="false">
+			<key column="menu_id"/>
+			<many-to-many column="role_id" class="edson.web.erp.role.domain.Role"/>
+		</set>
+	
+	</class>
+
+</hibernate-mapping>
